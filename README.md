@@ -6,6 +6,10 @@
 - [VORP Inventory](https://github.com/VORPCORE/vorp_inventory-lua)
 - And all requirements from the above required Plugins
 
+## Preview
+
+[![CLICK TO WATCH THE VIDEO](https://img.youtube.com/vi/NTYyQLcEcwc/0.jpg)](https://www.youtube.com/watch?v=NTYyQLcEcwc)
+
 ## How to install
 * Download the lastest release version of bh_river
 (If you download dont use the release versions, your could get errors from it.

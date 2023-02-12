@@ -12,7 +12,7 @@
 
 ## How to install
 * Download the lastest release version of bh_river
-(If you download dont use the release versions, your could get errors from it.
+(If you dont use the release versions, your could get errors from it.
 Use it as your own risk)
 * Copy and paste ```bh_river``` folder inside ```resources``` folder or any folder with ```[]``` name in it
 * Copy ```img``` folder content into ```vorp_inventory/html/img/``` folder

@@ -59,5 +59,5 @@ Config.defaultlang = "xx"
 - to [blue](https://github.com/kamelzarandah) for the initial work on the syn_river plugin
 
 ## Our Community
-[WEBSITE](https://www.battlehorns.net)
-[DISCORD](https://discord.gg/59pmYGHEtD)
+[WEBSITE](https://www.battlehorns.net) 
+[DISCORD](https://discord.gg/59pmYGHEtD) 

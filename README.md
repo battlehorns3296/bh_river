@@ -1,10 +1,12 @@
 # A Battlehorns improved version of the syn_river plugin
 
 ## Requirements
-- [VORP_Core](https://github.com/VORPCORE/vorp-core-lua)
-- [fred_metabolism](https://github.com/SirFreddie/fred_metabolism_free)
-- [VORP Inventory](https://github.com/VORPCORE/vorp_inventory-lua)
+- [bh_metabolism](https://github.com/josilv3296/bh_metabolism)
+- [VORP_Inventory](https://github.com/VORPCORE/vorp_inventory-lua)
 - And all requirements from the above required Plugins
+
+## Additional
+- [fred_hud](https://github.com/josilv3296/fred_hud)
 
 ## Preview
 

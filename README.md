@@ -1,12 +1,12 @@
 # A Battlehorns improved version of the syn_river plugin
 
 ## Requirements
-- [bh_metabolism](https://github.com/josilv3296/bh_metabolism)
+- [bh_metabolism](https://github.com/battlehorns3296/bh_metabolism)
 - [VORP_Inventory](https://github.com/VORPCORE/vorp_inventory-lua)
 - And all requirements from the above required Plugins
 
 ## Additional
-- [fred_hud](https://github.com/josilv3296/fred_hud)
+- [fred_hud](https://github.com/battlehorns3296/fred_hud)
 
 ## Preview
 
@@ -67,5 +67,6 @@ Config.defaultlang = "xx"
 - to [blue](https://github.com/kamelzarandah) for the initial work on the syn_river plugin
 
 ## Our Community
+[MORE_FROM_ME](https://github.com/battlehorns3296)
 [WEBSITE](https://www.battlehorns.net) 
 [DISCORD](https://discord.gg/59pmYGHEtD) 

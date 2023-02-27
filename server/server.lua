@@ -15,7 +15,7 @@ Citizen.CreateThread(function()
 end)
 Citizen.CreateThread(function()
 	Citizen.Wait(2000)
-	VORP.RegisterUsableItem("empty_bucket", function(data)
+	VORP.RegisterUsableItem("wateringcan_dirtywater", function(data)
 		TriggerClientEvent('green:StartFilling', data.source)
 	end)
 end)
@@ -94,14 +94,14 @@ end)
 
 RegisterNetEvent("fillup2")
 AddEventHandler("fillup2", function()
-    local item = "bucket_100"
+  local item = "wateringcan_dirtywater"
 	local r = 1
-    local _source = source 
-    if r then
-		VORP.subItem(_source, "empty_bucket", 1)
-        VORP.addItem(_source, item, 1)
-        TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillsuccess"), notifyDura)
-    end
+  local _source = source 
+  if r then
+  VORP.subItem(_source, "wateringcan_empty", 1)
+      VORP.addItem(_source, item, 1)
+      TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillbucketsuccess"), notifyDura)
+  end
 end)
 
 RegisterServerEvent("checkcanteen")
@@ -128,7 +128,7 @@ AddEventHandler("checkcanteen", function(rock)
   elseif canteen_full > 0 then
     TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("youalreadyfill"), notifyDura)
   else
-		TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("youneeditemto"), notifyDura)
+		TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("youneedcanteento"), notifyDura)
 	end
 end)
 
@@ -136,12 +136,12 @@ RegisterServerEvent("checkbucket")
 AddEventHandler("checkbucket", function(rock)
 	local _source = source
 	local Character = VorpCore.getUser(_source).getUsedCharacter
-	local empty = VORP.getItemCount(_source, 'empty_bucket')
+	local empty = VORP.getItemCount(_source, 'wateringcan_empty')
 
-	if empty > 0 then
+	if empty >= 1 then
 		TriggerClientEvent("bucketcheck", _source)
-	else
-		TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("youalreadyfill"), notifyDura)
+  elseif empty == 0 then
+    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("youneedbucketto"), notifyDura)
 	end
 end)
 

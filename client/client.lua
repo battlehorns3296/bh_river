@@ -38,7 +38,7 @@ local WaterTypes = {
 
 local buttons_prompt = GetRandomIntInRange(0, 0xffffff)
 local near = 1000
-
+--[[
 function Button_Prompt()
 Citizen.CreateThread(function()
   local str = _U("fill_Canteen_Button")
@@ -53,7 +53,7 @@ Citizen.CreateThread(function()
   PromptRegisterEnd(canteen)
 end)
 end  
-
+]]
 function Button_Prompt2()
 Citizen.CreateThread(function()
   local str = _U("fill_Bucket_Button")
@@ -68,7 +68,7 @@ Citizen.CreateThread(function()
   PromptRegisterEnd(bucket)
 end)
 end
-
+--[[
 function Button_Prompt3()
 Citizen.CreateThread(function()
     local str = _U("drink_Button")
@@ -83,7 +83,7 @@ Citizen.CreateThread(function()
     PromptRegisterEnd(Drink)
 end)
 end
-
+]]
 function Button_Prompt4()
 Citizen.CreateThread(function()
     local str = _U("wash_Button")
@@ -98,7 +98,7 @@ Citizen.CreateThread(function()
     PromptRegisterEnd(Wash)
 end)
 end
-
+--[[
 Citizen.CreateThread(function()
 Button_Prompt()
 while true do 
@@ -132,7 +132,41 @@ while true do
   end
 end
 end)
-
+]]
+Citizen.CreateThread(function()
+  Button_Prompt2()
+  while true do 
+    Citizen.Wait(near)
+    local coords = GetEntityCoords(PlayerPedId())
+    local Water = Citizen.InvokeNative(0x5BA7A68A346A5A91,coords.x+3, coords.y+3, coords.z)
+    local playerPed = PlayerPedId()
+    for k,v in pairs(WaterTypes) do 
+      if Water == WaterTypes[k]["waterhash"]  then
+        if IsPedOnFoot(PlayerPedId()) then
+          if IsEntityInWater(PlayerPedId()) then
+            near = 5
+            local pump = CreateVarString(10, 'LITERAL_STRING', _U("water_Zone_Names"))
+            PromptSetActiveGroupThisFrame(buttons_prompt, pump)
+            if PromptHasHoldModeCompleted(bucket) then
+              local buttons_prompts = { bucket, Wash, Drink }
+              for i, bucket in pairs(buttons_prompts) do
+                PromptSetVisible(bucket, false)
+              end
+              TriggerServerEvent('checkbucket')
+              Citizen.Wait(15000)
+              for i, bucket in pairs(buttons_prompts) do
+                PromptSetVisible(bucket, true)
+              end
+            end
+          else
+            near = 1000
+          end
+        end
+      end
+    end
+  end
+  end)
+--[[
 Citizen.CreateThread(function()
 Button_Prompt3()
 while true do 
@@ -166,7 +200,7 @@ while true do
   end
 end
 end)
-
+]]
 Citizen.CreateThread(function()
 Button_Prompt4()
 while true do 
@@ -242,15 +276,15 @@ AddEventHandler('canteencheck_20', function()
   ClearPedTasks(PlayerPedId())
   TriggerServerEvent("fillup1_20")
 end)
---[[
+
 RegisterNetEvent('bucketcheck')
 AddEventHandler('bucketcheck', function()
-  doPromptAnim(Config.Anims["fill_Bucket"]);
+  doPromptAnim(Config.Anims["fill_Bucket_A"], Config.Anims["fill_Bucket_B"], 2);
   Wait(10000)
   ClearPedTasks(PlayerPedId())
   TriggerServerEvent("fillup2")
 end)
-]]
+
 RegisterNetEvent('drinkcheck')
 AddEventHandler('drinkcheck', function()
   local _source = source

@@ -32,7 +32,7 @@ AddEventHandler("fillup1", function()
   if empty_canteen > 0 then
     VORP.subItem(_source, "empty_canteen", 1)
     VORP.addItem(_source, item, 1)
-    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillsuccess"), notifyDura)
+    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillcanteensuccess"), notifyDura)
   end
 end)
 
@@ -45,7 +45,7 @@ AddEventHandler("fillup1_80", function()
   if canteen_80 > 0 then
     VORP.subItem(_source, "canteen_80", 1)
     VORP.addItem(_source, item, 1)
-    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillsuccess"), notifyDura)
+    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillcanteensuccess"), notifyDura)
   end
 end)
 
@@ -58,7 +58,7 @@ AddEventHandler("fillup1_60", function()
   if canteen_60 > 0 then
     VORP.subItem(_source, "canteen_60", 1)
     VORP.addItem(_source, item, 1)
-    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillsuccess"), notifyDura)
+    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillcanteensuccess"), notifyDura)
   end
 end)
 
@@ -71,7 +71,7 @@ AddEventHandler("fillup1_40", function()
   if canteen_40 > 0 then
     VORP.subItem(_source, "canteen_40", 1)
     VORP.addItem(_source, item, 1)
-    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillsuccess"), notifyDura)
+    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillcanteensuccess"), notifyDura)
   end
 end)
 
@@ -84,7 +84,7 @@ AddEventHandler("fillup1_20", function()
   if canteen_20 > 0 then
     VORP.subItem(_source, "canteen_20", 1)
     VORP.addItem(_source, item, 1)
-    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillsuccess"), notifyDura)
+    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillcanteensuccess"), notifyDura)
   end
 end)
 

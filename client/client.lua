@@ -38,6 +38,7 @@ local WaterTypes = {
 
 local buttons_prompt = GetRandomIntInRange(0, 0xffffff)
 local near = 1000
+local IsPlayerCrouching = nil
 
 function Button_Prompt()
 Citizen.CreateThread(function()
@@ -100,7 +101,6 @@ end)
 end
 
 Citizen.CreateThread(function()
-Button_Prompt()
 while true do 
   Citizen.Wait(near)
   local coords = GetEntityCoords(PlayerPedId())
@@ -112,6 +112,7 @@ while true do
         if IsEntityInWater(PlayerPedId()) then
           near = 5
           local pump = CreateVarString(10, 'LITERAL_STRING', _U("water_Zone_Names"))
+          Button_Prompt()
           PromptSetActiveGroupThisFrame(buttons_prompt, pump)
           if PromptHasHoldModeCompleted(canteen) then
             local buttons_prompts = { bucket, canteen, Wash, Drink }
@@ -235,6 +236,12 @@ while true do
     end
   end
 end
+end)
+
+RegisterNetEvent("checkcrouch")
+AddEventHandler("checkcrouch", function(IsPlayerCrouch)
+  IsPlayerCrouching = IsPlayerCrouch
+  TriggerServerEvent("fillup1")
 end)
 
 RegisterNetEvent('canteencheck')

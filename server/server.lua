@@ -21,10 +21,10 @@ Citizen.CreateThread(function()
 end)
 
 local notifyDura = Config.Notifications["duration"] * 1000
+local item = "canteen_dirty"
 
 RegisterNetEvent("fillup1")
 AddEventHandler("fillup1", function()
-  local item = "canteen_full"
 	local r = 1
   local _source = source
 	local Character = VorpCore.getUser(_source).getUsedCharacter
@@ -38,7 +38,6 @@ end)
 
 RegisterNetEvent("fillup1_80")
 AddEventHandler("fillup1_80", function()
-  local item = "canteen_full"
 	local r = 1
   local _source = source 
   local Character = VorpCore.getUser(_source).getUsedCharacter
@@ -52,7 +51,6 @@ end)
 
 RegisterNetEvent("fillup1_60")
 AddEventHandler("fillup1_60", function()
-  local item = "canteen_full"
 	local r = 1
   local _source = source 
   local Character = VorpCore.getUser(_source).getUsedCharacter
@@ -66,7 +64,6 @@ end)
 
 RegisterNetEvent("fillup1_40")
 AddEventHandler("fillup1_40", function()
-  local item = "canteen_full"
 	local r = 1
   local _source = source 
   local Character = VorpCore.getUser(_source).getUsedCharacter
@@ -80,7 +77,6 @@ end)
 
 RegisterNetEvent("fillup1_20")
 AddEventHandler("fillup1_20", function()
-  local item = "canteen_full"
 	local r = 1
   local _source = source 
   local Character = VorpCore.getUser(_source).getUsedCharacter

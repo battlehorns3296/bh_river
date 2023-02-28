@@ -38,7 +38,7 @@ local WaterTypes = {
 
 local buttons_prompt = GetRandomIntInRange(0, 0xffffff)
 local near = 1000
---[[
+
 function Button_Prompt()
 Citizen.CreateThread(function()
   local str = _U("fill_Canteen_Button")
@@ -53,7 +53,7 @@ Citizen.CreateThread(function()
   PromptRegisterEnd(canteen)
 end)
 end  
-]]
+
 function Button_Prompt2()
 Citizen.CreateThread(function()
   local str = _U("fill_Bucket_Button")
@@ -98,7 +98,7 @@ Citizen.CreateThread(function()
     PromptRegisterEnd(Wash)
 end)
 end
---[[
+
 Citizen.CreateThread(function()
 Button_Prompt()
 while true do 
@@ -132,7 +132,7 @@ while true do
   end
 end
 end)
-]]
+
 Citizen.CreateThread(function()
   Button_Prompt2()
   while true do 

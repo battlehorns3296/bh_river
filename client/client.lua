@@ -36,10 +36,13 @@ local WaterTypes = {
   --[35] =  {["name"] = "Bahia De La Paz",      ["waterhash"] = -1168459546, ["watertype"] = "ocean"}, -- Disabled Ocean Water
 }
 
+progressbar = exports.vorp_progressbar:initiate()
+
+
 local buttons_prompt = GetRandomIntInRange(0, 0xffffff)
 local near = 1000
 
-function Button_Prompt()
+function Button_Prompt(Visibility)
 Citizen.CreateThread(function()
   local str = _U("fill_Canteen_Button")
   canteen = Citizen.InvokeNative(0x04F97DE45A519419)
@@ -54,7 +57,7 @@ Citizen.CreateThread(function()
 end)
 end  
 
-function Button_Prompt2()
+function Button_Prompt2(Visibility)
 Citizen.CreateThread(function()
   local str = _U("fill_Bucket_Button")
   bucket = Citizen.InvokeNative(0x04F97DE45A519419)
@@ -69,7 +72,7 @@ Citizen.CreateThread(function()
 end)
 end
 
-function Button_Prompt3()
+function Button_Prompt3(Visibility)
 Citizen.CreateThread(function()
     local str = _U("drink_Button")
     Drink = Citizen.InvokeNative(0x04F97DE45A519419)
@@ -84,7 +87,7 @@ Citizen.CreateThread(function()
 end)
 end
 
-function Button_Prompt4()
+function Button_Prompt4(Visibility)
 Citizen.CreateThread(function()
     local str = _U("wash_Button")
     Wash = Citizen.InvokeNative(0x04F97DE45A519419)
@@ -99,113 +102,145 @@ Citizen.CreateThread(function()
 end)
 end
 
-Citizen.CreateThread(function()
-Button_Prompt()
-while true do 
-  Citizen.Wait(near)
-  local coords = GetEntityCoords(PlayerPedId())
-  local Water = Citizen.InvokeNative(0x5BA7A68A346A5A91,coords.x+3, coords.y+3, coords.z)
-  local playerPed = PlayerPedId()
-  for k,v in pairs(WaterTypes) do 
-    if Water == WaterTypes[k]["waterhash"]  then
-      if IsPedOnFoot(PlayerPedId()) then
-        if IsEntityInWater(PlayerPedId()) then
-          near = 5
-          local pump = CreateVarString(10, 'LITERAL_STRING', _U("water_Zone_Names"))
-          PromptSetActiveGroupThisFrame(buttons_prompt, pump)
-          if PromptHasHoldModeCompleted(canteen) then
-            local buttons_prompts = { bucket, canteen, Wash, Drink }
-            for i, canteen in pairs(buttons_prompts) do
-              PromptSetVisible(canteen, false)
-            end
-            TriggerServerEvent('checkcanteen')
-            Citizen.Wait(15000)
-            for i, canteen in pairs(buttons_prompts) do
-              PromptSetVisible(canteen, true)
-            end
-          end
-        else
-          near = 1000
-        end
-      end
-    end
-  end
-end
-end)
+local buttons_prompts = { bucket, canteen, Wash, Drink }
 
-Citizen.CreateThread(function()
-Button_Prompt3()
-while true do 
-  Citizen.Wait(near)
-  local coords = GetEntityCoords(PlayerPedId())
-  local Water = Citizen.InvokeNative(0x5BA7A68A346A5A91,coords.x+3, coords.y+3, coords.z)
-  local playerPed = PlayerPedId()
-  for k,v in pairs(WaterTypes) do 
-    if Water == WaterTypes[k]["waterhash"]  then
-      if IsPedOnFoot(PlayerPedId()) then
-        if IsEntityInWater(PlayerPedId()) then
-          near = 5
-          local pump = CreateVarString(10, 'LITERAL_STRING', _U("water_Zone_Names"))
-          PromptSetActiveGroupThisFrame(buttons_prompt, pump)
-          if PromptHasHoldModeCompleted(Drink) then
-            local buttons_prompts = { bucket, canteen, Wash, Drink }
-            for i, Drink in pairs(buttons_prompts) do
-              PromptSetVisible(Drink, false)
-            end
-            TriggerServerEvent('checkdrink')
-            Citizen.Wait(15000)
-            for i, Drink in pairs(buttons_prompts) do
-              PromptSetVisible(Drink, true)
-            end
-          end
-        else
-          near = 1000
-        end
-      end
-    end
-  end
-end
-end)
+if Config.Features["EnableCanteen"] == true then
+  Citizen.CreateThread(function()
+    Button_Prompt()
+    while true do 
+      Citizen.Wait(near)
+      local coords = GetEntityCoords(PlayerPedId())
+      local Water = Citizen.InvokeNative(0x5BA7A68A346A5A91,coords.x+3, coords.y+3, coords.z)
+      local playerPed = PlayerPedId()
+      for k,v in pairs(WaterTypes) do 
+        if Water == WaterTypes[k]["waterhash"]  then
+          if IsPedOnFoot(PlayerPedId()) then
+            if IsEntityInWater(PlayerPedId()) then
+              near = 5
+              local pump = CreateVarString(10, 'LITERAL_STRING', _U("water_Zone_Names"))
+              PromptSetActiveGroupThisFrame(buttons_prompt, pump)
+              if PromptHasHoldModeCompleted(canteen) then
+                PromptSetVisible(canteen, false)
+                TriggerServerEvent('checkcanteen')
+                Citizen.Wait(10000)
+                PromptSetVisible(canteen, true)
 
-Citizen.CreateThread(function()
-Button_Prompt4()
-while true do 
-  Citizen.Wait(near)
-  local coords = GetEntityCoords(PlayerPedId())
-  local Water = Citizen.InvokeNative(0x5BA7A68A346A5A91,coords.x+3, coords.y+3, coords.z)
-  local playerPed = PlayerPedId()
-  for k,v in pairs(WaterTypes) do 
-    if Water == WaterTypes[k]["waterhash"]  then
-      if IsPedOnFoot(PlayerPedId()) then
-        if IsEntityInWater(PlayerPedId()) then
-          near = 5
-          local pump = CreateVarString(10, 'LITERAL_STRING', _U("water_Zone_Names"))
-          PromptSetActiveGroupThisFrame(buttons_prompt, pump)
-          if PromptHasHoldModeCompleted(Wash) then
-            local buttons_prompts = { bucket, canteen, Wash, Drink }
-            for i, Wash in pairs(buttons_prompts) do
-              PromptSetVisible(Wash, false)
-            end
-            TriggerServerEvent("wash:start")
-            StartWash("amb_misc@world_human_wash_face_bucket@ground@male_a@idle_d", "idle_l")
-            Citizen.Wait(5000)
-            TriggerServerEvent("wash:end")
-            for i, Wash in pairs(buttons_prompts) do
-              PromptSetVisible(Wash, true)
+              end
+            else
+              near = 1000
             end
           end
-        else
-          near = 1000
         end
       end
     end
-  end
+  end)
 end
+
+if Config.Features["EnableBucket"] == true then
+  Citizen.CreateThread(function()
+    Button_Prompt2()
+    while true do 
+      Citizen.Wait(near)
+      local coords = GetEntityCoords(PlayerPedId())
+      local Water = Citizen.InvokeNative(0x5BA7A68A346A5A91,coords.x+3, coords.y+3, coords.z)
+      local playerPed = PlayerPedId()
+      for k,v in pairs(WaterTypes) do 
+        if Water == WaterTypes[k]["waterhash"]  then
+          if IsPedOnFoot(PlayerPedId()) then
+            if IsEntityInWater(PlayerPedId()) then
+              near = 5
+              local pump = CreateVarString(10, 'LITERAL_STRING', _U("water_Zone_Names"))
+              PromptSetActiveGroupThisFrame(buttons_prompt, pump)
+              if PromptHasHoldModeCompleted(bucket) then
+                PromptSetVisible(bucket, false)
+                TriggerServerEvent('checkbucket')
+                Citizen.Wait(10000)
+                PromptSetVisible(bucket, true)
+              end
+            else
+              near = 1000
+            end
+          end
+        end
+      end
+    end
+  end)
+end
+
+if Config.Features["EnableDrink"] == true then
+  Citizen.CreateThread(function()
+    Button_Prompt3()
+    while true do 
+      Citizen.Wait(near)
+      local coords = GetEntityCoords(PlayerPedId())
+      local Water = Citizen.InvokeNative(0x5BA7A68A346A5A91,coords.x+3, coords.y+3, coords.z)
+      local playerPed = PlayerPedId()
+      for k,v in pairs(WaterTypes) do 
+        if Water == WaterTypes[k]["waterhash"]  then
+          if IsPedOnFoot(PlayerPedId()) then
+            if IsEntityInWater(PlayerPedId()) then
+              near = 5
+              local pump = CreateVarString(10, 'LITERAL_STRING', _U("water_Zone_Names"))
+              PromptSetActiveGroupThisFrame(buttons_prompt, pump)
+              if PromptHasHoldModeCompleted(Drink) then
+                PromptSetVisible(Drink, false)
+                TriggerServerEvent('checkdrink')
+                Citizen.Wait(10000)
+                PromptSetVisible(Drink, true)
+              end
+            else
+              near = 1000
+            end
+          end
+        end
+      end
+    end
+  end)
+end
+
+if Config.Features["EnableWash"] == true then
+  Citizen.CreateThread(function()
+    Button_Prompt4()
+    while true do 
+      Citizen.Wait(near)
+      local coords = GetEntityCoords(PlayerPedId())
+      local Water = Citizen.InvokeNative(0x5BA7A68A346A5A91,coords.x+3, coords.y+3, coords.z)
+      local playerPed = PlayerPedId()
+      for k,v in pairs(WaterTypes) do 
+        if Water == WaterTypes[k]["waterhash"]  then
+          if IsPedOnFoot(PlayerPedId()) then
+            if IsEntityInWater(PlayerPedId()) then
+              near = 5
+              local pump = CreateVarString(10, 'LITERAL_STRING', _U("water_Zone_Names"))
+              PromptSetActiveGroupThisFrame(buttons_prompt, pump)
+              if PromptHasHoldModeCompleted(Wash) then
+                PromptSetVisible(Wash, false)
+                TriggerServerEvent("wash:start")
+                StartWash("amb_misc@world_human_wash_face_bucket@ground@male_a@idle_d", "idle_l")
+                TriggerServerEvent("wash:end")
+                PromptSetVisible(Wash, true)
+              end
+            else
+              near = 1000
+            end
+          end
+        end
+      end
+    end
+  end)
+end
+
+RegisterNetEvent('enchendo')
+AddEventHandler('enchendo', function()
+  progressbar.start('Enchendo...', 10000, function()
+
+  end, 'linear')
 end)
 
 RegisterNetEvent('canteencheck')
 AddEventHandler('canteencheck', function()
   doPromptAnim(Config.Anims["fill_Canteen_A"], Config.Anims["fill_Canteen_B"], 2);
+  TriggerEvent('enchendo')
   Wait(10000)
   ClearPedTasks(PlayerPedId())
   TriggerServerEvent("fillup1")
@@ -214,6 +249,7 @@ end)
 RegisterNetEvent('canteencheck_80')
 AddEventHandler('canteencheck_80', function()
   doPromptAnim(Config.Anims["fill_Canteen_A"], Config.Anims["fill_Canteen_B"], 2);
+  TriggerEvent('enchendo')
   Wait(10000)
   ClearPedTasks(PlayerPedId())
   TriggerServerEvent("fillup1_80")
@@ -222,6 +258,7 @@ end)
 RegisterNetEvent('canteencheck_60')
 AddEventHandler('canteencheck_60', function()
   doPromptAnim(Config.Anims["fill_Canteen_A"], Config.Anims["fill_Canteen_B"], 2);
+  TriggerEvent('enchendo')
   Wait(10000)
   ClearPedTasks(PlayerPedId())
   TriggerServerEvent("fillup1_60")
@@ -230,6 +267,7 @@ end)
 RegisterNetEvent('canteencheck_40')
 AddEventHandler('canteencheck_40', function()
   doPromptAnim(Config.Anims["fill_Canteen_A"], Config.Anims["fill_Canteen_B"], 2);
+  TriggerEvent('enchendo')
   Wait(10000)
   ClearPedTasks(PlayerPedId())
   TriggerServerEvent("fillup1_40")
@@ -238,19 +276,21 @@ end)
 RegisterNetEvent('canteencheck_20')
 AddEventHandler('canteencheck_20', function()
   doPromptAnim(Config.Anims["fill_Canteen_A"], Config.Anims["fill_Canteen_B"], 2);
+  TriggerEvent('enchendo')
   Wait(10000)
   ClearPedTasks(PlayerPedId())
   TriggerServerEvent("fillup1_20")
 end)
---[[
+
 RegisterNetEvent('bucketcheck')
 AddEventHandler('bucketcheck', function()
   doPromptAnim(Config.Anims["fill_Bucket"]);
+  TriggerEvent('enchendo')
   Wait(10000)
   ClearPedTasks(PlayerPedId())
   TriggerServerEvent("fillup2")
 end)
-]]
+
 RegisterNetEvent('drinkcheck')
 AddEventHandler('drinkcheck', function()
   local _source = source
@@ -274,68 +314,3 @@ function doPromptAnim(dict, anim, loop)
   TaskPlayAnim(playerPed, dict, anim, 8.0, -8.0, 13000, loop, 0, true, 0, false, 0, false)
 play_anim = false
 end
-
-
---menu
---[[
-Citizen.CreateThread(function()
-while true do
-  Citizen.Wait(1)
-      local coords = GetEntityCoords(PlayerPedId())
-      local Water = Citizen.InvokeNative(0x5BA7A68A346A5A91,coords.x+3, coords.y+3, coords.z)
-      local playerPed = PlayerPedId()
-          for k,v in pairs(WaterTypes) do 
-            if Water == WaterTypes[k]["waterhash"]  then
-                if IsPedOnFoot(PlayerPedId()) then
-                    if IsEntityInWater(PlayerPedId()) then
-                        DrawTxt("Press [~e~G~q~] to wash, [~e~ENTER~q~] to Drink Water", 0.15, 0.30, 0.1, 0.3, true, 255, 255, 255, 255, true, 10000)
-                        if IsControlJustReleased(0, 0x760A9C6F) then -- wash G
-                            StartWash("amb_misc@world_human_wash_face_bucket@ground@male_a@idle_d", "idle_l")
-                        end
-                        if IsControlJustReleased(0, 0xC7B5340A) then -- drink enter
-                        TriggerEvent("drp:rio")
-                        Citizen.Wait(10000)
-                        TriggerEvent('fred:consume', 0,20,0,0,0.0,0,0,0,0.0,0.0) --Fred Metabolism
-                        --TriggerEvent("vorpmetabolism:changeValue", "Thirst", 144) --Vorp Metabolism
-                        PlaySoundFrontend("Core_Fill_Up", "Consumption_Sounds", true, 0)
-                        end
-                        if IsControlJustReleased(0, 0xDFF812F9) then -- fill up empty canteen E
-                          TriggerServerEvent("drp:fillemptycanteen")
-                          Citizen.Wait(1000)
-                          PlaySoundFrontend("Core_Fill_Up", "Consumption_Sounds", true, 0)
-                        end
-                    end
-                end
-            end
-          end
-end
-end)
-AddEventHandler('drp:rio', function()
-  local _source = source
-          if rio ~= 0 then
-              SetEntityAsMissionEntity(rio)
-              DeleteObject(nativerioprop)
-              rio = 0
-              end
-              local playerPed = PlayerPedId()
-              Citizen.Wait(0)
-              ClearPedTasksImmediately(PlayerPedId())
-              TaskStartScenarioInPlace(playerPed, GetHashKey('WORLD_HUMAN_BUCKET_DRINK_GROUND'), -1, true, false, false, false)
-              Citizen.Wait(17000)
-              ClearPedTasks(PlayerPedId())
-end)
-AddEventHandler('drp:fill', function()
-local _source = source
-if rio ~= 0 then
-    SetEntityAsMissionEntity(rio)
-    DeleteObject(nativerioprop)
-    rio = 0
-end
-  local playerPed = PlayerPedId()
-  TriggerServerEvent("drp:addcanteen")
-  ClearPedTasksImmediately(playerPed)
-  TaskStartScenarioInPlace(playerPed, GetHashKey('WORLD_CAMP_LENNY_GUARD_CROUCH_TRACKS'), -1, true, false, false, false)
-  Citizen.Wait(17000)
-  ClearPedTasks(PlayerPedId())
-end)
-]]

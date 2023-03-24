@@ -104,7 +104,7 @@ end
 
 local buttons_prompts = { bucket, canteen, Wash, Drink }
 
-if Config.Features["EnableCanteen"] == true then
+
   Citizen.CreateThread(function()
     Button_Prompt()
     while true do 
@@ -134,9 +134,9 @@ if Config.Features["EnableCanteen"] == true then
       end
     end
   end)
-end
 
-if Config.Features["EnableBucket"] == true then
+
+
   Citizen.CreateThread(function()
     Button_Prompt2()
     while true do 
@@ -165,9 +165,9 @@ if Config.Features["EnableBucket"] == true then
       end
     end
   end)
-end
 
-if Config.Features["EnableDrink"] == true then
+
+
   Citizen.CreateThread(function()
     Button_Prompt3()
     while true do 
@@ -196,9 +196,9 @@ if Config.Features["EnableDrink"] == true then
       end
     end
   end)
-end
 
-if Config.Features["EnableWash"] == true then
+
+
   Citizen.CreateThread(function()
     Button_Prompt4()
     while true do 
@@ -228,7 +228,7 @@ if Config.Features["EnableWash"] == true then
       end
     end
   end)
-end
+
 
 RegisterNetEvent('enchendo')
 AddEventHandler('enchendo', function()

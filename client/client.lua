@@ -230,7 +230,11 @@ if Config.Features["EnableWash"] == true then
   end)
 end
 
-
+RegisterNetEvent('enchendo')
+AddEventHandler('enchendo', function()
+  progressbar.start('Enchendo...', 10000, function()
+  end, 'linear')
+end)
 
 RegisterNetEvent('canteencheck')
 AddEventHandler('canteencheck', function()

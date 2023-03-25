@@ -165,6 +165,7 @@ if Config.Features["EnableBucket"] == true then
   end)
 end
 
+
 if Config.Features["EnableDrink"] == true then
   Citizen.CreateThread(function()
     Button_Prompt3()

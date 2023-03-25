@@ -102,8 +102,6 @@ Citizen.CreateThread(function()
 end)
 end
 
-local buttons_prompts = { bucket, canteen, Wash, Drink }
-
 if Config.Features["EnableCanteen"] == true then
   Citizen.CreateThread(function()
     Button_Prompt()

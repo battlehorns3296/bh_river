@@ -1,12 +1,18 @@
 # A Battlehorns improved version of the syn_river plugin
+With this plugin, you are able to fill durty water from river, and somehow boil the water on fire to create clean water to drink.
+Empty Canteens are required to fill from river, as well the empty buckets, so, try to add them into some stores or any NPC you may have.
+Fred_metabolism was changed to be able to add items while drinking, so you can be able to see canteen drop 20% of the water each time you drink it, and become empty when you drink it 5 times.
+All the sequence images are on the ```img``` folder here. Those do the magic :D
 
 ## Requirements
 - [bh_metabolism](https://github.com/battlehorns3296/bh_metabolism)
+- [fred_hud](https://github.com/battlehorns3296/fred_hud)
 - [VORP_Inventory](https://github.com/VORPCORE/vorp_inventory-lua)
 - And all requirements from the above required Plugins
 
 ## Additional
-- [fred_hud](https://github.com/battlehorns3296/fred_hud)
+- [Vorp_crafting](https://github.com/VORPCORE/vorp_crafting)
+To be able to craft clean water canteens
 
 ## Preview
 
@@ -53,12 +59,13 @@ Config.defaultlang = "xx"
 
 ## Features
 * Small drink amount from the river
-* Fill Canteen from river
+* Fill Canteen from river (durty water)
+* Fill Bucket from river
 * Drink from Canteen reduce 20% of the Canteen content
 * You dont need to drink the full content of the Canteen to refill it from the river
 * You can quick refresh yourself from the river
+* Options to Enable/Disable Features on Config file
 ## TODO
-* You can fill your bucket of water from the river to use it to water your crops
 * Add items to the Character hands while on the animation
 * Add more Config options into the ```config.lua``` file
 * And more...

@@ -1,4 +1,8 @@
 # A Battlehorns improved version of the syn_river plugin
+With this plugin, you are able to fill durty water from river, and somehow boil the water on fire to create clean water to drink.
+Empty Canteens are required to fill from river, as well the empty buckets, so, try to add them into some stores or any NPC you may have.
+Fred_metabolism was changed to be able to add items while drinking, so you can be able to see canteen drop 20% of the water each time you drink it, and become empty when you drink it 5 times.
+All the sequence images are on the ```img``` folder here. Those do the magic :D
 
 ## Requirements
 - [bh_metabolism](https://github.com/battlehorns3296/bh_metabolism)

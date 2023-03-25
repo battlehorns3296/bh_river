@@ -15,16 +15,20 @@ Citizen.CreateThread(function()
 end)
 Citizen.CreateThread(function()
 	Citizen.Wait(2000)
-	VORP.RegisterUsableItem("empty_bucket", function(data)
+	VORP.RegisterUsableItem("wateringcan_dirtywater", function(data)
 		TriggerClientEvent('green:StartFilling', data.source)
 	end)
 end)
 
 local notifyDura = Config.Notifications["duration"] * 1000
+local item = "canteen_dirty"
 
 RegisterNetEvent("fillup1")
 AddEventHandler("fillup1", function()
+
   local item = "canteen_dirty"
+=======
+
 	local r = 1
   local _source = source
 	local Character = VorpCore.getUser(_source).getUsedCharacter
@@ -32,13 +36,16 @@ AddEventHandler("fillup1", function()
   if empty_canteen > 0 then
     VORP.subItem(_source, "canteen_empty", 1)
     VORP.addItem(_source, item, 1)
-    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillsuccess"), notifyDura)
+    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillcanteensuccess"), notifyDura)
   end
 end)
 
 RegisterNetEvent("fillup1_80")
 AddEventHandler("fillup1_80", function()
+
   local item = "canteen_dirty"
+
+
 	local r = 1
   local _source = source 
   local Character = VorpCore.getUser(_source).getUsedCharacter
@@ -46,13 +53,15 @@ AddEventHandler("fillup1_80", function()
   if canteen_80 > 0 then
     VORP.subItem(_source, "canteen_80", 1)
     VORP.addItem(_source, item, 1)
-    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillsuccess"), notifyDura)
+    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillcanteensuccess"), notifyDura)
   end
 end)
 
 RegisterNetEvent("fillup1_60")
 AddEventHandler("fillup1_60", function()
+
   local item = "canteen_dirty"
+
 	local r = 1
   local _source = source 
   local Character = VorpCore.getUser(_source).getUsedCharacter
@@ -60,13 +69,14 @@ AddEventHandler("fillup1_60", function()
   if canteen_60 > 0 then
     VORP.subItem(_source, "canteen_60", 1)
     VORP.addItem(_source, item, 1)
-    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillsuccess"), notifyDura)
+    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillcanteensuccess"), notifyDura)
   end
 end)
 
 RegisterNetEvent("fillup1_40")
-AddEventHandler("fillup1_40", function()
+
   local item = "canteen_dirty"
+
 	local r = 1
   local _source = source 
   local Character = VorpCore.getUser(_source).getUsedCharacter
@@ -74,13 +84,15 @@ AddEventHandler("fillup1_40", function()
   if canteen_40 > 0 then
     VORP.subItem(_source, "canteen_40", 1)
     VORP.addItem(_source, item, 1)
-    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillsuccess"), notifyDura)
+    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillcanteensuccess"), notifyDura)
   end
 end)
 
 RegisterNetEvent("fillup1_20")
 AddEventHandler("fillup1_20", function()
+
   local item = "canteen_dirty"
+
 	local r = 1
   local _source = source 
   local Character = VorpCore.getUser(_source).getUsedCharacter
@@ -88,20 +100,20 @@ AddEventHandler("fillup1_20", function()
   if canteen_20 > 0 then
     VORP.subItem(_source, "canteen_20", 1)
     VORP.addItem(_source, item, 1)
-    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillsuccess"), notifyDura)
+    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillcanteensuccess"), notifyDura)
   end
 end)
 
 RegisterNetEvent("fillup2")
 AddEventHandler("fillup2", function()
-    local item = "bucket_100"
+  local item = "wateringcan_dirtywater"
 	local r = 1
-    local _source = source 
-    if r then
-		VORP.subItem(_source, "empty_bucket", 1)
-        VORP.addItem(_source, item, 1)
-        TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillsuccess"), notifyDura)
-    end
+  local _source = source 
+  if r then
+  VORP.subItem(_source, "wateringcan_empty", 1)
+      VORP.addItem(_source, item, 1)
+      TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("fillbucketsuccess"), notifyDura)
+  end
 end)
 
 RegisterServerEvent("checkcanteen")
@@ -128,7 +140,7 @@ AddEventHandler("checkcanteen", function(rock)
   elseif canteen_full > 0 then
     TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("youalreadyfill"), notifyDura)
   else
-		TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("youneeditemto"), notifyDura)
+		TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("youneedcanteento"), notifyDura)
 	end
 end)
 
@@ -136,12 +148,17 @@ RegisterServerEvent("checkbucket")
 AddEventHandler("checkbucket", function(rock)
 	local _source = source
 	local Character = VorpCore.getUser(_source).getUsedCharacter
-	local empty = VORP.getItemCount(_source, 'empty_bucket')
+	local empty = VORP.getItemCount(_source, 'wateringcan_empty')
 
-	if empty > 0 then
+	if empty >= 1 then
 		TriggerClientEvent("bucketcheck", _source)
+
 	else
 		TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("youalreadyfillb"), notifyDura)
+
+  elseif empty == 0 then
+    TriggerClientEvent("vorp:" .. Config.Notifications["position"] .. "", _source, _U("youneedbucketto"), notifyDura)
+
 	end
 end)
 

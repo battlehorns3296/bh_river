@@ -42,7 +42,7 @@ progressbar = exports.vorp_progressbar:initiate()
 local buttons_prompt = GetRandomIntInRange(0, 0xffffff)
 local near = 1000
 
-function Button_Prompt(Visibility)
+function Button_Prompt()
 Citizen.CreateThread(function()
   local str = _U("fill_Canteen_Button")
   canteen = Citizen.InvokeNative(0x04F97DE45A519419)
@@ -57,7 +57,7 @@ Citizen.CreateThread(function()
 end)
 end  
 
-function Button_Prompt2(Visibility)
+function Button_Prompt2()
 Citizen.CreateThread(function()
   local str = _U("fill_Bucket_Button")
   bucket = Citizen.InvokeNative(0x04F97DE45A519419)
@@ -72,7 +72,7 @@ Citizen.CreateThread(function()
 end)
 end
 
-function Button_Prompt3(Visibility)
+function Button_Prompt3()
 Citizen.CreateThread(function()
     local str = _U("drink_Button")
     Drink = Citizen.InvokeNative(0x04F97DE45A519419)
@@ -87,7 +87,7 @@ Citizen.CreateThread(function()
 end)
 end
 
-function Button_Prompt4(Visibility)
+function Button_Prompt4()
 Citizen.CreateThread(function()
     local str = _U("wash_Button")
     Wash = Citizen.InvokeNative(0x04F97DE45A519419)

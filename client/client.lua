@@ -41,6 +41,7 @@ progressbar = exports.vorp_progressbar:initiate()
 
 local buttons_prompt = GetRandomIntInRange(0, 0xffffff)
 local near = 1000
+local IsPlayerCrouching = nil
 
 function Button_Prompt()
 Citizen.CreateThread(function()
@@ -71,7 +72,7 @@ Citizen.CreateThread(function()
   PromptRegisterEnd(bucket)
 end)
 end
-
+--[[
 function Button_Prompt3()
 Citizen.CreateThread(function()
     local str = _U("drink_Button")
@@ -86,7 +87,7 @@ Citizen.CreateThread(function()
     PromptRegisterEnd(Drink)
 end)
 end
-
+]]
 function Button_Prompt4()
 Citizen.CreateThread(function()
     local str = _U("wash_Button")
@@ -157,13 +158,12 @@ if Config.Features["EnableBucket"] == true then
               end
             else
               near = 1000
-            end
           end
         end
       end
     end
-  end)
-end
+  end
+ end)
 
 
 if Config.Features["EnableDrink"] == true then
@@ -189,6 +189,28 @@ if Config.Features["EnableDrink"] == true then
               end
             else
               near = 1000
+
+end)
+]]
+Citizen.CreateThread(function()
+Button_Prompt4()
+while true do 
+  Citizen.Wait(near)
+  local coords = GetEntityCoords(PlayerPedId())
+  local Water = Citizen.InvokeNative(0x5BA7A68A346A5A91,coords.x+3, coords.y+3, coords.z)
+  local playerPed = PlayerPedId()
+  for k,v in pairs(WaterTypes) do 
+    if Water == WaterTypes[k]["waterhash"]  then
+      if IsPedOnFoot(PlayerPedId()) then
+        if IsEntityInWater(PlayerPedId()) then
+          near = 5
+          local pump = CreateVarString(10, 'LITERAL_STRING', _U("water_Zone_Names"))
+          PromptSetActiveGroupThisFrame(buttons_prompt, pump)
+          if PromptHasHoldModeCompleted(Wash) then
+            local buttons_prompts = { bucket, canteen, Wash, Drink }
+            for i, Wash in pairs(buttons_prompts) do
+              PromptSetVisible(Wash, false)
+
             end
           end
         end
@@ -233,6 +255,12 @@ RegisterNetEvent('enchendo')
 AddEventHandler('enchendo', function()
   progressbar.start('Enchendo...', 10000, function()
   end, 'linear')
+end)
+
+RegisterNetEvent("checkcrouch")
+AddEventHandler("checkcrouch", function(IsPlayerCrouch)
+  IsPlayerCrouching = IsPlayerCrouch
+  TriggerServerEvent("fillup1")
 end)
 
 RegisterNetEvent('canteencheck')
@@ -282,8 +310,12 @@ end)
 
 RegisterNetEvent('bucketcheck')
 AddEventHandler('bucketcheck', function()
+
   doPromptAnim(Config.Anims["fill_Bucket"]);
   TriggerEvent('enchendo')
+
+  doPromptAnim(Config.Anims["fill_Bucket_A"], Config.Anims["fill_Bucket_B"], 2);
+
   Wait(10000)
   ClearPedTasks(PlayerPedId())
   TriggerServerEvent("fillup2")

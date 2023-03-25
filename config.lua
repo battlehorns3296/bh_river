@@ -13,6 +13,13 @@ Config.Keys = {-- Examples https://github.com/mja00/redm-shit/blob/master/nuiwea
   wash_Button         = 0x8AAA0AD4  --[LALT]
 }
 
+Config.Features = {-- Enable or Disable Plugin Features
+  EnableWash          = true, -- Options true/false
+  EnableDrink         = true,
+  EnableCanteen       = true,
+  EnableBucket        = true
+}
+
 Config.Notifications = {
   duration            = 7,           -- The time in seconds it will be showing each notification
   position            = "TipBottom", -- available values = NotifyLeft,Tip,NotifyTo,TipRight,TipBottom,ShowTopNotification,
